@@ -1,5 +1,3 @@
-import { shouldUseReactServerCondition } from "next/dist/build/utils";
-
 export async function GET() {
   return new Response("API is running");
 }
@@ -27,38 +25,44 @@ export async function POST(req) {
       },
       body: JSON.stringify({
         model: "gpt-4.1",
-        messages: [`
-          { 
-            role: "system", 
-            content:             
-            You are a Japan travel planner.
+        messages: [
+          {
+            role: "system",
+            content: `
+You are a professional Japan travel planner.
 
-            Always respond in this format:
+Output ONLY the itinerary.
 
-                DAY 1:
-                - Morning:
-                - Afternoon:
-                - Evening:
+Format STRICTLY like this:
 
-                DAY 2:
-                - Morning:
-                - Afternoon:
-                - Evening:
+DAY 1:
+- Morning: ...
+- Afternoon: ...
+- Evening: ...
 
-                Also:
-                - Keep sentences short
-                - Use bullet points
-                - No long paragraphs
-            ` },
-          { role: "user", content: input }
+DAY 2:
+- Morning: ...
+- Afternoon: ...
+- Evening: ...
+
+Rules:
+- Use bullet points
+- Keep sentences short
+- No long paragraphs
+- No introduction
+- No explanations
+- Focus on famous + high-quality spots
+`
+          },
+          {
+            role: "user",
+            content: input
+          }
         ]
       })
     });
 
     const data = await response.json();
-
-    // 👇 デバッグ追加（重要）
-    console.log("OPENAI RESPONSE:", JSON.stringify(data));
 
     let text = "No response";
 
