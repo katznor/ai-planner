@@ -34,9 +34,18 @@ export async function POST(req) {
 
     const data = await response.json();
 
-    return new Response(JSON.stringify({
-      text: data.choices?.[0]?.message?.content || "No response"
-    }), {
+    // 👇 デバッグ追加（重要）
+    console.log("OPENAI RESPONSE:", JSON.stringify(data));
+
+    let text = "No response";
+
+    if (data.choices && data.choices.length > 0) {
+      text = data.choices[0].message?.content || "Empty response";
+    } else if (data.error) {
+      text = "Error: " + data.error.message;
+    }
+
+    return new Response(JSON.stringify({ text }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
