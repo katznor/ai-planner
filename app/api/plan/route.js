@@ -27,10 +27,11 @@ export async function POST(req) {
       },
       body: JSON.stringify({
         model: "gpt-4.1",
-        messages: [
+        messages: [`
           { 
             role: "system", 
-            content: "You are a Japan travel planner.
+            content:             
+            You are a Japan travel planner.
 
             Always respond in this format:
 
@@ -48,7 +49,7 @@ export async function POST(req) {
                 - Keep sentences short
                 - Use bullet points
                 - No long paragraphs
-            " },
+            ` },
           { role: "user", content: input }
         ]
       })
