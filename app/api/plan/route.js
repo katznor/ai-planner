@@ -1,3 +1,7 @@
+export async function GET() {
+  return new Response("API is running");
+}
+
 export async function OPTIONS() {
   return new Response(null, {
     status: 200,
