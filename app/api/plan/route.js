@@ -1,3 +1,5 @@
+import { shouldUseReactServerCondition } from "next/dist/build/utils";
+
 export async function GET() {
   return new Response("API is running");
 }
@@ -26,7 +28,27 @@ export async function POST(req) {
       body: JSON.stringify({
         model: "gpt-4.1",
         messages: [
-          { role: "system", content: "You are a Japan travel planner." },
+          { 
+            role: "system", 
+            content: "You are a Japan travel planner.
+
+            Always respond in this format:
+
+                DAY 1:
+                - Morning:
+                - Afternoon:
+                - Evening:
+
+                DAY 2:
+                - Morning:
+                - Afternoon:
+                - Evening:
+
+                Also:
+                - Keep sentences short
+                - Use bullet points
+                - No long paragraphs
+            " },
           { role: "user", content: input }
         ]
       })
